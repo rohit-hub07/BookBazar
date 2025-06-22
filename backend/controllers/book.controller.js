@@ -1,5 +1,6 @@
 import { getCurrUser } from "../middleware/getCurrUser.js";
 import Books from "../model/book.model.js";
+import Review from "../model/review.model.js";
 
 export const addBookController = async (req, res) => {
   console.log("req.body:", req.body);
@@ -82,7 +83,7 @@ export const updateBookDetail = async (req, res) => {
     const updatedBookDetail = await Books.findByIdAndUpdate(
       { _id: id },
       { bookImage, title, price },
-      { new: true } 
+      { new: true }
     );
     console.log("Updated book details: ", updatedBookDetail);
     res.status(200).json({
@@ -120,6 +121,78 @@ export const deleteBook = async (req, res) => {
     return res.status(404).json({
       message: "Book doesn't exist",
       success: false,
+    });
+  }
+};
+
+//reviews controllers
+export const addReviewController = async (req, res) => {
+  const { id } = req.params;
+  const { rating, description } = req.body;
+  try {
+    if (!rating) {
+      return res.status(404).json({
+        message: "Please fill the details!",
+        success: false,
+      });
+    }
+
+    const bookDetail = await Books.findById({ _id: id });
+    if (!bookDetail) {
+      return res.status(404).json({
+        message: "Book doesn't exist",
+        success: false,
+      });
+    }
+    const review = await Review.create({
+      rating,
+      description,
+    });
+    console.log("Review: ", review);
+    review.book = bookDetail.id;
+    bookDetail.review.push(review);
+    await bookDetail.save();
+    await review.save();
+    console.log("book detail: ", bookDetail);
+    res.status(200).json({
+      message: "Review added successfully",
+      success: true,
+      bookDetail,
+      reviews: bookDetail.review,
+    });
+  } catch (error) {
+    console.log("Error adding the review", error);
+    return res.status(409).json({
+      message: "Error adding the review!",
+      success: false,
+    });
+  }
+};
+
+export const viewReviewController = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const book = await Books.findById({ _id: id });
+    if (!book) {
+      return res.status(404).json({
+        message: "Book doesn't exist!",
+        success: false,
+      });
+    }
+    const review = await Review.find({ book: id }).populate(
+      "user"
+    );
+    console.log("review:", review);
+    res.status(200).json({
+      message: "Reviews fetched successfully",
+      success: true,
+      review,
+    });
+  } catch (error) {
+    console.log("Error fetching reviews", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching reviews!",
     });
   }
 };

@@ -19,6 +19,12 @@ const bookSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    review: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review"
+      },
+    ],
   },
   { timeStamps: true }
 );
