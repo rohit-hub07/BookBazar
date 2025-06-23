@@ -10,15 +10,6 @@ import cors from "cors";
 
 dotenv.config();
 
-const corsOptions = {
-    origin: ["http://localhost:8000"],
-    credentials: true,
-}
-
-app.use(
-  cors(corsOptions)
-);
-
 const app = express();
 
 const port = process.env.PORT;
@@ -26,7 +17,13 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+const corsOptions = {
+    origin: ["http://localhost:8000"],
+    credentials: true,
+}
+app.use(
+  cors(corsOptions)
+);
 app.get("/", (req, res) => {
   res.send("This is the route");
 });
