@@ -5,6 +5,7 @@ import userRouter from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import bookRouter from "./routes/book.routes.js";
 import reviewRouter from "./routes/review.routes.js";
+import orderRouter from "./routes/order.routes.js";
 dotenv.config();
 const app = express();
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/auth", userRouter);
 app.use("/books", bookRouter);
 app.use("/reviews", reviewRouter)
+app.use("/orders", orderRouter)
 
 db();
 
