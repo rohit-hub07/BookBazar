@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export const registerController = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password,role } = req.body;
   try {
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -24,6 +24,7 @@ export const registerController = async (req, res) => {
       name,
       email,
       password,
+      role
     });
     if (!newUser) {
       return res
