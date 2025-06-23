@@ -5,6 +5,17 @@ export const deleteReviewController = async (req, res) => {
   const { id } = req.params;
   try {
     // await Books.findByIdAndDelete(id,{$pull: {review: id}})
+    const review = await Review.findById({ _id: id });
+    if (!review) {
+      return res.status(404).json({
+        message: "Review doesn't exist!",
+        success: false,
+      });
+    }
+    await Books.findByIdAndUpdate(
+      { _id: review.book },
+      { $pull: { review: id } }
+    );
     const deletedReview = await Review.findByIdAndDelete({ _id: id });
     if (!deletedReview) {
       return res.status(404).json({
