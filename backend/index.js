@@ -6,7 +6,19 @@ import cookieParser from "cookie-parser";
 import bookRouter from "./routes/book.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import orderRouter from "./routes/order.routes.js";
+import cors from "cors";
+
 dotenv.config();
+
+const corsOptions = {
+    origin: ["http://localhost:8000"],
+    credentials: true,
+}
+
+app.use(
+  cors(corsOptions)
+);
+
 const app = express();
 
 const port = process.env.PORT;
@@ -21,8 +33,8 @@ app.get("/", (req, res) => {
 
 app.use("/auth", userRouter);
 app.use("/books", bookRouter);
-app.use("/reviews", reviewRouter)
-app.use("/orders", orderRouter)
+app.use("/reviews", reviewRouter);
+app.use("/orders", orderRouter);
 
 db();
 
