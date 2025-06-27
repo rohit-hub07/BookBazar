@@ -123,6 +123,7 @@ export const loginController = async (req, res) => {
     );
     const cookieOptions = {
       httpOnly: true,
+      sameSite: "strict",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     };

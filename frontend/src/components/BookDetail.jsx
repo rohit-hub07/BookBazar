@@ -1,0 +1,65 @@
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useBookStore from "../store/useBookStore";
+import { ShoppingBag } from "lucide-react";
+
+
+const BookDetail = () => {
+  const { id } = useParams();
+  const { book, getBookDetails, addToCart } = useBookStore();
+
+  useEffect(() => {
+    getBookDetails(id);
+  }, [id, getBookDetails]);
+
+  const defaultCover =
+    "https://th.bing.com/th/id/OIP.4fZvK8IfIRSr_aHUa_tSiAHaKl?w=208&h=297&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3";
+
+  return (
+    <div className="max-w-4xl mx-auto my-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white shadow-lg rounded-xl overflow-hidden lg:flex lg:items-center">
+        {/* Enlarged Cover */}
+        <div className="lg:flex-shrink-0 w-full lg:w-2/5 relative">
+          <img
+            src={book?.bookImage || defaultCover}
+            alt={book?.title || "Book cover"}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = defaultCover;
+            }}
+            className="w-full h-auto max-h-[500px] object-cover rounded-t-xl lg:rounded-l-xl"
+          />
+        </div>
+
+        {/* Details & Add to Cart Button */}
+        <div className="p-6 lg:w-3/5 flex flex-col justify-between">
+          <div>
+            <h2 className="text-4xl lg:text-5xl font-semibold text-blue-700 mb-2">
+              {book?.title || "Untitled"}
+            </h2>
+            <h3 className="text-2xl text-gray-800 italic mb-4">
+              by {book?.author || "Unknown Author"}
+            </h3>
+            <p className="text-xl font-medium text-gray-900 mb-6">
+              Price:{" "}
+              <span className="text-blue-600">{book?.price || "N/A"}</span>
+            </p>
+          </div>
+
+          {/* Add to Cart Button using Lucide icon */}
+          <button
+            onClick={() => addToCart(book)}
+            aria-label={`Add ${book?.title} to cart`}
+            className="inline-flex items-center justify-center space-x-2 px-5 py-3 bg-blue-600 text-white rounded-lg
+             hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          >
+            <ShoppingBag size={20} strokeWidth={2} />
+            <span>Add to Cart</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BookDetail;
