@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useBookStore from "../store/useBookStore";
 import { ShoppingBag } from "lucide-react";
+import useOrderStore from "../store/useOrderStore";
 
 
 const BookDetail = () => {
   const { id } = useParams();
-  const { book, getBookDetails, addToCart } = useBookStore();
+  const { book, getBookDetails } = useBookStore();
+  const { placeOrder } = useOrderStore()
 
   useEffect(() => {
     getBookDetails(id);
@@ -47,15 +49,16 @@ const BookDetail = () => {
           </div>
 
           {/* Add to Cart Button using Lucide icon */}
-          <button
-            onClick={() => addToCart(book)}
+          <Link to= {`/orders/${book?._id}`} >
+            <button
             aria-label={`Add ${book?.title} to cart`}
             className="inline-flex items-center justify-center space-x-2 px-5 py-3 bg-blue-600 text-white rounded-lg
              hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           >
             <ShoppingBag size={20} strokeWidth={2} />
-            <span>Add to Cart</span>
+            <span>Place Order</span>
           </button>
+          </Link>
         </div>
       </div>
     </div>

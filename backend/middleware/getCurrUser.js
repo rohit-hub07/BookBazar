@@ -1,7 +1,7 @@
 import User from "../model/user.model.js";
 
 export const getCurrUser = async (userId) => {
-  const currUser = await User.findById({ _id: userId }).select("-password");
+  const currUser = await User.findById(userId).select("-password");
   if (!currUser) {
     return null;
   }
@@ -12,7 +12,7 @@ export const getCurrUser = async (userId) => {
 export const isAdmin = async (req, res, next) => {
   try {
     const loggedInUserId = req.userId;
-    const user = await User.findById({ _id: loggedInUserId });
+    const user = await User.findById(loggedInUserId).select("-password");
     if (!user) {
       return res.status(401).json({
         message: "Please login!",

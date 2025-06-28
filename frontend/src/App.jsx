@@ -8,6 +8,8 @@ import { Toaster } from "react-hot-toast";
 import Layout from "./layout/Layout";
 import SignupPage from "./page/SignupPage";
 import BookDetail from "./components/BookDetail";
+import PlaceOrder from "./components/PlaceOrder";
+import OrderPage from "./page/OrderPage";
 
 function App() {
   const { authUser, checkAuth } = useAuthStore();
@@ -36,6 +38,14 @@ function App() {
               authUser ? <BookDetail /> : <Navigate to={"/auth/login"} />
             }
           />
+
+          <Route
+            path="/orders/:id"
+            element={authUser ? <PlaceOrder /> : <Navigate to="/auth/login" />}
+          />
+
+          <Route path="/orders" element={<OrderPage />}/>
+
         </Route>
 
         <Route

@@ -35,7 +35,7 @@ export const addBookController = async (req, res) => {
 
 export const getAllBooks = async (req, res) => {
   try {
-    const allBooks = await Books.find({});
+    const allBooks = await Books.find({}).populate("purchasedBy").populate("review");
     console.log("Allbooks: ", allBooks);
     res.status(200).json({
       success: true,
@@ -54,7 +54,7 @@ export const getAllBooks = async (req, res) => {
 export const getBookById = async (req, res) => {
   const { id } = req.params;
   try {
-    const bookDetail = await Books.findById({ _id: id });
+    const bookDetail = await Books.findById({ _id: id }).populate("purchasedBy").populate("review");
     if (!bookDetail) {
       return res.status(404).json({
         message: "Book doesn't exist!",

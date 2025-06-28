@@ -55,14 +55,10 @@ const Navbar = ({ isLoggedIn }) => {
         )}
 
         {/* Cart */}
-        <Link to="/cart" className="relative group">
-          <ShoppingCart className="w-6 h-6 text-gray-700 group-hover:text-blue-600 transition" />
-          {/* Optional Cart Count Badge */}
-          {/* 
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-            3
-          </span> 
-          */}
+        <Link to="/orders" className="relative group">
+          <span className="text-gray-800 font-medium">
+              Orders
+            </span>
         </Link>
       </div>
     </nav>

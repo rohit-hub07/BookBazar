@@ -2,6 +2,15 @@ import { getCurrUser } from "../middleware/getCurrUser.js";
 import Books from "../model/book.model.js";
 import Orders from "../model/order.model.js";
 
+// export const addTocartController = async() => {
+//   const { id } = req.params;
+//   try {
+//     // const bookDetail = await 
+//   } catch (error) {
+    
+//   }
+// }
+
 export const placeOrdersController = async (req, res) => {
   const { id } = req.params;
   const { quantity } = req.body;
@@ -31,7 +40,12 @@ export const placeOrdersController = async (req, res) => {
     }
 
     console.log("Placed order: ", order);
+    await order.save();
+    
+    book.purchasedBy.push(loggedInUser);
+    await book.save();
 
+    console.log("Book inside placeorder: ", book);
     res.status(200).json({
       message: "Order placed successfully",
       success: true,

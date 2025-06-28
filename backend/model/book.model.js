@@ -20,14 +20,16 @@ const bookSchema = new mongoose.Schema(
       required: true,
       default: "rohit",
     },
-    purchasedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    purchasedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     review: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Review"
+        ref: "Review",
       },
     ],
   },
