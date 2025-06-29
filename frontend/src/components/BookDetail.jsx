@@ -3,13 +3,18 @@ import { Link, useParams } from "react-router-dom";
 import useBookStore from "../store/useBookStore";
 import { ShoppingBag } from "lucide-react";
 import useOrderStore from "../store/useOrderStore";
-
+import AllReviews from "./AllReviews";
+import { useAuthStore } from "../store/useAuthStore";
 
 const BookDetail = () => {
   const { id } = useParams();
   const { book, getBookDetails } = useBookStore();
-  const { placeOrder } = useOrderStore()
-
+  const { authUser } = useAuthStore();
+  const checking = () => {
+    if (!authUser?._id || !book?.purchasedBy) return false;
+    return book.purchasedBy.some((user) => user._id?.toString() === authUser._id.toString());
+  };
+  const isMatched = checking();
   useEffect(() => {
     getBookDetails(id);
   }, [id, getBookDetails]);
@@ -61,12 +66,22 @@ const BookDetail = () => {
           </Link>
         </div>
       </div>
-      <div className="flex justify-end mt-6">
-        <Link to={`/books/${book?._id}/reviews`}>
-          <button
-            className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition font-medium"
-          >
-            Add Review
+      <div className="flex justify-end mt-6 gap-4">
+        {isMatched ? (
+          <>
+            <Link to={`/books/${book?._id}/reviews`}>
+              <button className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition font-medium">
+                Add Review
+              </button>
+            </Link>
+          </>
+        ) : (
+          <></>
+        )}
+
+        <Link to={`/reviews/${book?._id}/reviews`}>
+          <button className="px-4 py-2 bg-gray-200 text-green-700 rounded-lg shadow hover:bg-green-100 border border-green-600 transition font-medium">
+            See All Reviews
           </button>
         </Link>
       </div>

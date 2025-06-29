@@ -12,6 +12,7 @@ import PlaceOrder from "./components/PlaceOrder";
 import OrderPage from "./page/OrderPage";
 import OrderDetailPage from "./page/OrderDetailPage";
 import BookDetailPage from "./page/BookDetailPage";
+import AllReviews from "./components/AllReviews";
 
 function App() {
   const { authUser, checkAuth } = useAuthStore();
@@ -50,7 +51,9 @@ function App() {
 
           <Route path="/orders/orderDetail/:id" element={<OrderDetailPage />} />
 
-          <Route path="/books/:id/reviews" element={<BookDetailPage />} />  
+          <Route path="/books/:id/reviews" element={<BookDetailPage />} />
+
+          <Route path="/reviews/:id/reviews" element={<AllReviews />} />  
         </Route>
 
         <Route

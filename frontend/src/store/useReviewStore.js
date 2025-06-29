@@ -25,8 +25,8 @@ const useReviewStore = create((set) => ({
   getAllReviews: async (id) => {
     set({isReviewsLoading: true});
     try {
-      const res = await axiosInstance.get(`/books/${id}/reviews`);
-      set({ reviews: res.data.reviews });
+      const res = await axiosInstance.get(`/reviews/${id}/reviews`);
+      set({ reviews: res.data.allReview });
       toast.success(res.data.message);
     } catch (error) {
       console.log("Error getting reviews" , error);

@@ -2,10 +2,12 @@ import { useForm } from 'react-hook-form';
 import { Star, Feather, Send } from 'lucide-react';
 import useReviewStore from '../store/useReviewStore';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewForm = () => {
   const { addReview, isReviewLoading } = useReviewStore();
   const { id } = useParams();
+  const navigate = useNavigate();
   const { 
     register,
     handleSubmit,
@@ -18,6 +20,7 @@ const ReviewForm = () => {
   const onSubmit = async (data) => {
     try {
       await addReview(id, data);
+      navigate(`/books/${id}`);
       reset(); // clear form on success
     } catch {}
   };

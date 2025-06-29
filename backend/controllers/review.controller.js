@@ -49,3 +49,31 @@ export const deleteReviewController = async (req, res) => {
     });
   }
 };
+
+export const viewReviewController = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const book = await Books.findById({ _id: id });
+    if (!book) {
+      return res.status(404).json({
+        message: "Book doesn't exist!",
+        success: false,
+      });
+    }
+    const review = await Review.find({ book: id }).populate(
+      "user"
+    );
+    console.log("review:", review);
+    res.status(200).json({
+      message: "Reviews fetched successfully",
+      success: true,
+      allReview: review,
+    });
+  } catch (error) {
+    console.log("Error fetching reviews", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching reviews!",
+    });
+  }
+};
