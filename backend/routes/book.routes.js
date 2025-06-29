@@ -8,7 +8,7 @@ const bookRouter = express.Router();
 bookRouter.post('/',isVerified,isAdmin, addBookController);
 bookRouter.get('/',isVerified, getAllBooks);
 bookRouter.get('/:id',isVerified, getBookById);
-bookRouter.put('/:id',isVerified,isAdmin, updateBookDetail);
+bookRouter.put('/update/:id',isVerified,isAdmin, updateBookDetail);
 bookRouter.delete('/:id',isVerified,isAdmin, deleteBook)
 
 //review routes inside books

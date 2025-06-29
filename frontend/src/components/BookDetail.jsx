@@ -10,10 +10,16 @@ const BookDetail = () => {
   const { id } = useParams();
   const { book, getBookDetails } = useBookStore();
   const { authUser } = useAuthStore();
+  let isAdmin = false;
   const checking = () => {
+    if(authUser.role === "admin"){
+      isAdmin = true;
+      return true;
+    };
     if (!authUser?._id || !book?.purchasedBy) return false;
     return book.purchasedBy.some((user) => user._id?.toString() === authUser._id.toString());
   };
+
   const isMatched = checking();
   useEffect(() => {
     getBookDetails(id);
@@ -67,6 +73,15 @@ const BookDetail = () => {
         </div>
       </div>
       <div className="flex justify-end mt-6 gap-4">
+        {isAdmin ? (
+          <>
+            <Link to={`/books/update/${book?._id}`}>
+              <button className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition font-medium">
+                Update Book Details
+              </button>
+            </Link>
+          </>
+        ): (<></>)}
         {isMatched ? (
           <>
             <Link to={`/books/${book?._id}/reviews`}>

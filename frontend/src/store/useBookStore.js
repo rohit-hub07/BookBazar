@@ -7,7 +7,9 @@ const useBookStore = create((set) => ({
   isBooksLoading: false,
   book: null,
   isBookLoading: FinalizationRegistry,
-
+  newBook: null,
+  isBookAdding: false,
+  isBookUpdating: false,
   getAllBooks: async () => {
     set({ isBooksLoading: true });
     try {
@@ -35,6 +37,33 @@ const useBookStore = create((set) => ({
       set({ isBookLoading: false });
     }
   },
+
+  addBook: async (data) => {
+    set({ isBookAdding: true });
+    try {
+      const res = await axiosInstance.post("/books", data);
+      set({ newBook: res.data.addedBook });
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error("Error adding book!");
+    }
+    finally{
+      set({isBookAdding: false})
+    }
+  },
+
+  updateBook: async(id,data) => {
+    set({isBookUpdating: true});
+    try {
+      const res = await axiosInstance.put(`/books/update/${id}`, data);
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error("Error updating books!");
+    }
+    finally{
+      set({isBookUpdating: false});
+    }
+  }
 }));
 
 export default useBookStore;

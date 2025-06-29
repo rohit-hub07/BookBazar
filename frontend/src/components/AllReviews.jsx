@@ -39,7 +39,7 @@ const AllReviews = () => {
           </div>
         ))
       ) : (
-        <p className="text-center text-gray-500">No reviews yet. Be the first to review!</p>
+        <p className="text-center text-gray-500">No reviews yet.</p>
       )}
     </div>
   );

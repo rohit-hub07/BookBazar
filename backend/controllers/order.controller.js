@@ -5,9 +5,9 @@ import Orders from "../model/order.model.js";
 // export const addTocartController = async() => {
 //   const { id } = req.params;
 //   try {
-//     // const bookDetail = await 
+//     // const bookDetail = await
 //   } catch (error) {
-    
+
 //   }
 // }
 
@@ -41,7 +41,7 @@ export const placeOrdersController = async (req, res) => {
 
     console.log("Placed order: ", order);
     await order.save();
-    
+
     book.purchasedBy.push(loggedInUser);
     await book.save();
 
@@ -61,21 +61,40 @@ export const placeOrdersController = async (req, res) => {
 };
 
 export const allOrdersController = async (req, res) => {
-  const allOrders = await Orders.find({})
-    .populate({ path: "user", select: "-password" })
-    .populate("bookDetail");
   try {
-    if (!allOrders) {
-      return res.status(404).json({
-        message: "No order available!",
-        success: false,
+    const loggedInUser = await getCurrUser(req.userId);
+    if (loggedInUser.role === "admin") {
+      const allOrders = await Orders.find({})
+        .populate({ path: "user", select: "-password" })
+        .populate("bookDetail");
+      if (!allOrders) {
+        return res.status(404).json({
+          message: "No order available!",
+          success: false,
+        });
+      }
+      res.status(200).json({
+        message: "Orders fetched successfully",
+        success: true,
+        allOrders,
+      });
+    } else {
+      const allOrders = await Orders.find({ user: loggedInUser._id })
+        .populate({ path: "user", select: "-password" })
+        .populate("bookDetail");
+      console.log("inside orders of current user: ", allOrders);
+      if (!allOrders) {
+        return res.status(404).json({
+          message: "No order available!",
+          success: false,
+        });
+      }
+      res.status(200).json({
+        message: "Orders fetched successfully",
+        success: true,
+        allOrders,
       });
     }
-    res.status(200).json({
-      message: "Orders fetched successfully",
-      success: true,
-      allOrders,
-    });
   } catch (error) {
     console.log("Error while fetching orders", error);
     return res.status(404).json({
@@ -94,7 +113,9 @@ export const getOrderDetailsController = async (req, res) => {
         success: false,
       });
     }
-    const orderDetails = await Orders.findById({ _id: id }).populate({path: "user", select: "-password"}).populate("bookDetail");
+    const orderDetails = await Orders.findById({ _id: id })
+      .populate({ path: "user", select: "-password" })
+      .populate("bookDetail");
     if (!orderDetails) {
       return res.status(401).json({
         message: "Order doesn't exist!",

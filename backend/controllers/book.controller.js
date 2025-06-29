@@ -78,11 +78,11 @@ export const getBookById = async (req, res) => {
 
 export const updateBookDetail = async (req, res) => {
   const { id } = req.params;
-  const { bookImage, title, price } = req.body;
+  const { bookImage, title, price,author } = req.body;
   try {
     const updatedBookDetail = await Books.findByIdAndUpdate(
       { _id: id },
-      { bookImage, title, price },
+      { bookImage, title, price, author },
       { new: true }
     );
     console.log("Updated book details: ", updatedBookDetail);

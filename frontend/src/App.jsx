@@ -13,6 +13,9 @@ import OrderPage from "./page/OrderPage";
 import OrderDetailPage from "./page/OrderDetailPage";
 import BookDetailPage from "./page/BookDetailPage";
 import AllReviews from "./components/AllReviews";
+import ProfilePage from "./page/ProfilePage";
+import AddBooks from "./components/AddBooks";
+import UpdateBook from "./components/UpdateBook";
 
 function App() {
   const { authUser, checkAuth } = useAuthStore();
@@ -54,6 +57,12 @@ function App() {
           <Route path="/books/:id/reviews" element={<BookDetailPage />} />
 
           <Route path="/reviews/:id/reviews" element={<AllReviews />} />  
+
+          <Route path="/auth/me" element={<ProfilePage />} />
+
+          <Route path="/books" element={<AddBooks />} />  
+          <Route path="/books/update/:id" element={<UpdateBook />}  />
+
         </Route>
 
         <Route
