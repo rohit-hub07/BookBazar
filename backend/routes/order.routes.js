@@ -6,6 +6,6 @@ const orderRouter = express.Router();
 
 orderRouter.post("/:id",isVerified, placeOrdersController);
 orderRouter.get("/",isVerified, allOrdersController);
-orderRouter.get("/:id",isVerified, getOrderDetailsController)
+orderRouter.get("/orderDetail/:id",isVerified, getOrderDetailsController)
 
 export default orderRouter;

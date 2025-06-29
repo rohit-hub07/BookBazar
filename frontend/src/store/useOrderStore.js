@@ -7,7 +7,7 @@ const useOrderStore = create((set) => ({
   isPlacing: false,
   orders: [],
   isAllOrdersLoading: false,
-  orderDetails: null,
+  orderInfo: null,
   placeOrder: async (data,id) => {
     set({ isPlacing: true });
     try {
@@ -37,8 +37,9 @@ const useOrderStore = create((set) => ({
   },
   getOrderDetail: async (id) => {
     try {
-      const res = await axiosInstance.get(`/orders/${id}`);
-      set({ orderDetails: res.data.orderDetails });
+      const res = await axiosInstance.get(`/orders/orderDetail/${id}`);
+      console.log("Order details inside useorderStore: ", res.data)
+      set({ orderInfo: res.data.orderDetails });
       toast.success(res.data.message);
     } catch (error) {
       console.log("Error getting order details:", error);

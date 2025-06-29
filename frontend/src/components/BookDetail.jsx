@@ -49,17 +49,26 @@ const BookDetail = () => {
           </div>
 
           {/* Add to Cart Button using Lucide icon */}
-          <Link to= {`/orders/${book?._id}`} >
+          <Link to={`/orders/${book?._id}`}>
             <button
-            aria-label={`Add ${book?.title} to cart`}
-            className="inline-flex items-center justify-center space-x-2 px-5 py-3 bg-blue-600 text-white rounded-lg
-             hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          >
-            <ShoppingBag size={20} strokeWidth={2} />
-            <span>Place Order</span>
-          </button>
+              aria-label={`Add ${book?.title} to cart`}
+              className="inline-flex items-center justify-center space-x-2 px-5 py-3 bg-blue-600 text-white rounded-lg
+                hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition font-semibold shadow-md"
+            >
+              <ShoppingBag size={20} strokeWidth={2} />
+              <span>Place Order</span>
+            </button>
           </Link>
         </div>
+      </div>
+      <div className="flex justify-end mt-6">
+        <Link to={`/books/${book?._id}/reviews`}>
+          <button
+            className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition font-medium"
+          >
+            Add Review
+          </button>
+        </Link>
       </div>
     </div>
   );

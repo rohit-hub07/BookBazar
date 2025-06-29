@@ -10,6 +10,8 @@ import SignupPage from "./page/SignupPage";
 import BookDetail from "./components/BookDetail";
 import PlaceOrder from "./components/PlaceOrder";
 import OrderPage from "./page/OrderPage";
+import OrderDetailPage from "./page/OrderDetailPage";
+import BookDetailPage from "./page/BookDetailPage";
 
 function App() {
   const { authUser, checkAuth } = useAuthStore();
@@ -46,6 +48,9 @@ function App() {
 
           <Route path="/orders" element={<OrderPage />}/>
 
+          <Route path="/orders/orderDetail/:id" element={<OrderDetailPage />} />
+
+          <Route path="/books/:id/reviews" element={<BookDetailPage />} />  
         </Route>
 
         <Route

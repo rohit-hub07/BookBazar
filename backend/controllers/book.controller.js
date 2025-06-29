@@ -148,8 +148,10 @@ export const addReviewController = async (req, res) => {
       rating,
       description,
     });
+    const loggedInUserId = await getCurrUser(req.userId);
     console.log("Review: ", review);
     review.book = bookDetail.id;
+    review.user = loggedInUserId;
     bookDetail.review.push(review);
     await bookDetail.save();
     await review.save();
@@ -159,6 +161,7 @@ export const addReviewController = async (req, res) => {
       success: true,
       bookDetail,
       reviews: bookDetail.review,
+      review,
     });
   } catch (error) {
     console.log("Error adding the review", error);

@@ -28,7 +28,7 @@ const AllBooks = () => {
               />
               <h3 className="text-xl font-semibold text-gray-800 mb-1">{book.title}</h3>
               <p className="text-gray-600 mb-1 font-medium">₹{book.price}</p>
-              {/* You can add more fields here, like book.author, etc. */}
+
               <Link to={`/books/${book._id}`}>
               <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                 View Details
