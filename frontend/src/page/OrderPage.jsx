@@ -3,10 +3,10 @@ import useOrderStore from '../store/useOrderStore';
 import { 
   Book, 
   Hash, 
-  ShoppingCart,   // cart icon for order summary
-  ListOrdered,    // represents order number
-  Truck,          // or Ship for delivery tracking
-  Info,            // icon for details button
+  ShoppingCart,   
+  ListOrdered,    
+  Truck,         
+  Info,           
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -50,7 +50,7 @@ const OrderPage = () => {
 
             <div className="flex items-center text-gray-700 mt-2">
               <ListOrdered className="w-4 h-4 mr-1 text-indigo-600 stroke-2" />
-              <span>Order #{e.id}</span>
+              <span>Order Id #{e._id}</span>
             </div>
 
             <div className="flex items-center text-gray-700 mt-1">

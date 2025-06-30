@@ -38,31 +38,25 @@ function App() {
             element={authUser ? <HomePage /> : <Navigate to="/auth/login" />}
           />
 
-          <Route
-            path="/books/:id"
-            element={
-              authUser ? <BookDetail /> : <Navigate to={"/auth/login"} />
-            }
-          />
+          <Route path="/books/:id" element={<BookDetail />} />
 
           <Route
             path="/orders/:id"
-            element={authUser ? <PlaceOrder /> : <Navigate to="/auth/login" />}
+            element={<PlaceOrder /> }
           />
 
-          <Route path="/orders" element={<OrderPage />}/>
+          <Route path="/orders" element={<OrderPage />} />
 
           <Route path="/orders/orderDetail/:id" element={<OrderDetailPage />} />
 
           <Route path="/books/:id/reviews" element={<BookDetailPage />} />
 
-          <Route path="/reviews/:id/reviews" element={<AllReviews />} />  
+          <Route path="/reviews/:id/reviews" element={<AllReviews />} />
 
           <Route path="/auth/me" element={<ProfilePage />} />
 
-          <Route path="/books" element={<AddBooks />} />  
-          <Route path="/books/update/:id" element={<UpdateBook />}  />
-
+          <Route path="/books" element={<AddBooks />} />
+          <Route path="/books/update/:id" element={<UpdateBook />} />
         </Route>
 
         <Route

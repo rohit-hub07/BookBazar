@@ -46,24 +46,30 @@ const useBookStore = create((set) => ({
       toast.success(res.data.message);
     } catch (error) {
       toast.error("Error adding book!");
-    }
-    finally{
-      set({isBookAdding: false})
+    } finally {
+      set({ isBookAdding: false });
     }
   },
 
-  updateBook: async(id,data) => {
-    set({isBookUpdating: true});
+  updateBook: async (id, data) => {
+    set({ isBookUpdating: true });
     try {
       const res = await axiosInstance.put(`/books/update/${id}`, data);
       toast.success(res.data.message);
     } catch (error) {
       toast.error("Error updating books!");
+    } finally {
+      set({ isBookUpdating: false });
     }
-    finally{
-      set({isBookUpdating: false});
+  },
+  deleteBook: async (id) => {
+    try {
+      await axiosInstance.delete(`/books/${id}`);
+      toast.success("Book Deleted successfully");
+    } catch (error) {
+      toast.error("Error deleting book!");
     }
-  }
+  },
 }));
 
 export default useBookStore;

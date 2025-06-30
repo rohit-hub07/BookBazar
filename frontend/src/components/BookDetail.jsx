@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import useBookStore from "../store/useBookStore";
 import { ShoppingBag } from "lucide-react";
-import useOrderStore from "../store/useOrderStore";
-import AllReviews from "./AllReviews";
 import { useAuthStore } from "../store/useAuthStore";
-
+import { useNavigate } from "react-router-dom";
 const BookDetail = () => {
   const { id } = useParams();
-  const { book, getBookDetails } = useBookStore();
+  const { book, getBookDetails,deleteBook } = useBookStore();
   const { authUser } = useAuthStore();
+  const navigate = useNavigate();
+  
   let isAdmin = false;
   const checking = () => {
-    if(authUser.role === "admin"){
+    if(authUser?.role === "admin"){
       isAdmin = true;
       return true;
     };
@@ -27,6 +27,11 @@ const BookDetail = () => {
 
   const defaultCover =
     "https://th.bing.com/th/id/OIP.4fZvK8IfIRSr_aHUa_tSiAHaKl?w=208&h=297&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3";
+
+  const deleteFunction = async(id) => {
+    await deleteBook(id);
+    navigate("/");
+  }
 
   return (
     <div className="max-w-4xl mx-auto my-12 px-4 sm:px-6 lg:px-8">
@@ -80,6 +85,11 @@ const BookDetail = () => {
                 Update Book Details
               </button>
             </Link>
+            
+              <button onClick={() => deleteFunction(book?._id)} className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition font-medium">
+                Delete Book
+              </button>
+            
           </>
         ): (<></>)}
         {isMatched ? (

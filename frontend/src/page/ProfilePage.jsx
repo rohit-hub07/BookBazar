@@ -28,7 +28,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Orders List */}
-      <h2 className="text-xl font-semibold mb-4">Your Orders</h2>
+      {authUser?.role === "admin" ? <h2 className="text-xl font-semibold mb-4">All Orders</h2>: <h2 className="text-xl font-semibold mb-4">Your Orders</h2>}
       <div className="space-y-4">
         {orders?.map((val, idx) => (
           <div

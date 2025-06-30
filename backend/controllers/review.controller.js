@@ -5,6 +5,7 @@ import User from "../model/user.model.js";
 
 export const deleteReviewController = async (req, res) => {
   const { id } = req.params;
+  let isOwner = false;
   try {
     // await Books.findByIdAndDelete(id,{$pull: {review: id}})
 
@@ -17,12 +18,16 @@ export const deleteReviewController = async (req, res) => {
         success: false,
       });
     }
-
-    if (loggedInUserId._id.toString() !== review.user._id.toString()) {
+    
+    if (loggedInUserId._id.toString() !== review.user._id.toString() && loggedInUserId.role !== "admin") {
       return res.status(403).json({
         message: "You can not delete other's review!",
         success: false,
       });
+    }
+
+    if(loggedInUserId._id.toString() == review.user._id.toString()){
+      isOwner = true;
     }
 
     await Books.findByIdAndUpdate(
@@ -40,6 +45,7 @@ export const deleteReviewController = async (req, res) => {
       message: "Review deleted successfully",
       success: true,
       deletedReview,
+      isOwner,
     });
   } catch (error) {
     console.log("Error deleting the review", error);

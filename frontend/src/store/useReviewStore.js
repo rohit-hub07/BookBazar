@@ -7,7 +7,7 @@ const useReviewStore = create((set) => ({
   isReviewLoading: false,
   reviews: [],
   isReviewsLoading: false,
-
+  isReviewCreator: false,
   addReview: async (id, data) => {
     set({ isReviewLoading: true });
     try {
@@ -23,28 +23,27 @@ const useReviewStore = create((set) => ({
   },
 
   getAllReviews: async (id) => {
-    set({isReviewsLoading: true});
+    set({ isReviewsLoading: true });
     try {
       const res = await axiosInstance.get(`/reviews/${id}/reviews`);
       set({ reviews: res.data.allReview });
       toast.success(res.data.message);
     } catch (error) {
-      console.log("Error getting reviews" , error);
+      console.log("Error getting reviews", error);
       toast.error("Error getting reviews!");
-    }
-    finally{
-      set({isReviewsLoading: false});
+    } finally {
+      set({ isReviewsLoading: false });
     }
   },
-  deleteReview: async(id) => {
+  deleteReview: async (id) => {
     try {
-      const res = await axiosInstance(`/reviews/${id}`);
+      const res = await axiosInstance.delete(`/reviews/${id}`);
       toast.success(res.data.message);
     } catch (error) {
       console.log("Error deleting review!", error);
       toast.error("Error deleting review!");
     }
-  }
+  },
 }));
 
 export default useReviewStore;
