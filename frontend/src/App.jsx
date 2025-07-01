@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { useAuthStore } from "./store/useAuthStore";
 import { Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./page/loginPage";
+import LoginPage from "./page/LoginPage";
 import HomePage from "./page/HomePage";
 import { Toaster } from "react-hot-toast";
 import Layout from "./layout/Layout";
@@ -29,13 +29,13 @@ function App() {
       <Routes>
         <Route
           path="/auth/login"
-          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
         />
 
         <Route path="/" element={<Layout />}>
           <Route
             path="/"
-            element={authUser ? <HomePage /> : <Navigate to="/auth/login" />}
+            element={authUser ? <HomePage /> : <Navigate to={"/auth/login"} />}
           />
 
           <Route path="/books/:id" element={<BookDetail />} />

@@ -18,12 +18,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-    origin: ["http://localhost:8000", "http://localhost:5173"],
-    credentials: true,
-}
+  origin: [
+    "http://localhost:8000",
+    "http://localhost:5173",
+    "https://book-bazar-frontend-9q7i.vercel.app",
+    "https://bookbazar-backend-ap9n.onrender.com/",
+    "https://bookbazar-backend-ap9n.onrender.com",
+  ],
+  credentials: true,
+};
+
 app.use(
   cors(corsOptions)
 );
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
+
+
 app.get("/", (req, res) => {
   res.send("This is the route");
 });
