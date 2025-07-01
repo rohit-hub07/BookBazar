@@ -2,6 +2,8 @@
 
 BookBazar is a platform for discovering, buying, and selling books online.
 
+### Hosted Link: https://book-bazar-frontend-9q7i.vercel.app/
+
 ## Features
 
 - Browse a wide selection of books
